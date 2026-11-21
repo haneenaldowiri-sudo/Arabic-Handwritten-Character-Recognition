@@ -7,7 +7,7 @@ We train two CNNs (a baseline and a proposed CNN) on adult handwriting (AHCD), t
 handwriting (Hijja), and measure how much fine-tuning with 5%, 10% and 25% of the Hijja training set recovers.
 
 ## Files
-- `Checkpoint_2.ipynb`: the full notebook (data loading, preprocessing, models, training, fine-tuning, error analysis).
+- `Arabic_Handwritten_Character_Recognition.ipynb`: the full notebook (data loading, preprocessing, models, training, fine-tuning, error analysis).
 - `requirements.txt`: dependencies.
 
 ## Data
@@ -15,7 +15,7 @@ handwriting (Hijja), and measure how much fine-tuning with 5%, 10% and 25% of th
 - Hijja: https://github.com/israksu/Hijja2 (cloned automatically in the notebook).
 
 ## How to reproduce
-1. Open `Checkpoint_2.ipynb` in Google Colab and set Runtime > Change runtime type > T4 GPU.
+1. Open `Arabic_Handwritten_Character_Recognition.ipynb` in Google Colab and set Runtime > Change runtime type > T4 GPU.
 2. Run all cells from top to bottom (Runtime > Run all). Total time is about 10 minutes.
 3. Outputs are saved in the `processed/` folder: `results_zero_shot.csv`, `results_multiseed.csv`,
    `per_letter_accuracy.csv`, `confusion_matrix.png`, `per_letter_accuracy.png`.
