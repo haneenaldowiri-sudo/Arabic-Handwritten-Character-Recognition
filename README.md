@@ -1,92 +1,31 @@
-# Arabic Handwritten Character Recognition
+# Cross-Dataset Evaluation and Fine-Tuning of CNNs for Arabic Handwritten Character Recognition
 
-## Project Overview
+CAI 421 Deep Learning, section 53U, Princess Nourah bint Abdulrahman University.
+Authors: Renad Alghazi, Ghala Khalid, Hanin Aldowiri, Sara Alsuwailem.
 
-This project is developed for the CAI421 Deep Learning course at Princess Nourah bint Abdulrahman University.
+We train two CNNs (a baseline and a proposed CNN) on adult handwriting (AHCD), test them on children's
+handwriting (Hijja), and measure how much fine-tuning with 5%, 10% and 25% of the Hijja training set recovers.
 
-The project investigates how well Convolutional Neural Networks (CNNs) trained on adult Arabic handwriting can recognize handwritten characters produced by children.
+## Files
+- `Checkpoint_2.ipynb`: the full notebook (data loading, preprocessing, models, training, fine-tuning, error analysis).
+- `requirements.txt`: dependencies.
 
-Two datasets are used:
+## Data
+- AHCD: Kaggle dataset `mloey1/ahcd1` (downloaded automatically with `kagglehub` in the notebook).
+- Hijja: https://github.com/israksu/Hijja2 (cloned automatically in the notebook).
 
-- **AHCD:** Arabic Handwritten Characters Dataset, containing adult handwriting samples.
-- **Hijja:** A dataset containing Arabic handwriting samples from children.
+## How to reproduce
+1. Open `Checkpoint_2.ipynb` in Google Colab and set Runtime > Change runtime type > T4 GPU.
+2. Run all cells from top to bottom (Runtime > Run all). Total time is about 10 minutes.
+3. Outputs are saved in the `processed/` folder: `results_zero_shot.csv`, `results_multiseed.csv`,
+   `per_letter_accuracy.csv`, `confusion_matrix.png`, `per_letter_accuracy.png`.
 
-## Models
+## Settings
+- Seeds: 42 (data splits, single runs), and 42, 43, 44 (multi-seed results).
+- Training: Adam, learning rate 1e-3, batch size 64, up to 30 epochs, early stopping on validation loss (patience 5).
+- Fine-tuning: all layers trainable, Adam, learning rate 1e-4, batch size 32, 20 epochs, stratified Hijja subsets.
+- Splits: AHCD 12,096 train / 1,344 validation / 3,360 test; Hijja (isolated letters) 9,880 train / 2,471 test.
 
-Two CNN architectures are implemented and compared.
-
-**1. Baseline CNN**
-- Two convolutional layers with ReLU activation
-- Max-pooling layers
-- Flatten layer
-- Softmax classification layer
-
-**2. Proposed CNN**
-- Three convolutional layers with ReLU activation
-- Batch normalization
-- Max-pooling
-- Global average pooling
-- Dropout
-- Softmax classification layer
-
-Both models classify 28 Arabic character classes using grayscale images of size 32 × 32 pixels.
-
-## Implemented Experiments
-
-The notebook includes:
-
-1. Downloading and preprocessing the AHCD and Hijja datasets.
-2. Preparing training, validation, and testing data.
-3. Training the baseline CNN and proposed CNN on AHCD.
-4. Evaluating both models on the AHCD test set.
-5. Evaluating both models on Hijja without fine-tuning.
-6. Reporting accuracy, macro precision, macro recall, and macro F1-score.
-
-## Planned Experiments
-
-Future experiments will investigate fine-tuning the AHCD-trained model using 5%, 10%, and 25% of Hijja training data.
-
-The objective is to measure how different amounts of children's handwriting data affect recognition performance.
-
-These fine-tuning experiments are planned and are not included in the current notebook.
-
-## Requirements
-
-- Python 3
-- TensorFlow / Keras
-- NumPy
-- Pandas
-- Matplotlib
-- Scikit-learn
-- Pillow
-- KaggleHub
-
-## How to Run
-
-1. Open `Checkpoint_2.ipynb` in Google Colab.
-2. Enable a GPU runtime if available.
-3. Run the notebook cells in order.
-4. Allow the notebook to download AHCD and clone the Hijja repository.
-5. Run preprocessing, training, and evaluation.
-6. Review the generated evaluation results.
-
-The notebook uses random seed 42 and saves trained models, processed data, and evaluation results in the `processed` directory.
-
-## Dataset Sources
-
-AHCD:
-https://www.kaggle.com/datasets/mloey1/ahcd1
-
-Hijja:
-https://github.com/israksu/Hijja2
-
-The datasets are obtained from their respective sources. Dataset licensing and redistribution conditions should be checked before distributing dataset files.
-
-## Project Status
-
-Checkpoint 2: Baseline and proposed CNN training, cross-dataset evaluation, and preliminary results.
-
-Fine-tuning experiments and the final analysis remain future work.
-Checkpoint 2: Baseline and proposed CNN training, cross-dataset evaluation, and preliminary results.
-
-Fine-tuning experiments and the final analysis remain future work.
+## Note on reproducibility
+GPU training in TensorFlow is not fully deterministic, so single runs can differ by a few points
+(especially the zero-shot accuracy on Hijja). Reported results are the mean and standard deviation over three seeds.

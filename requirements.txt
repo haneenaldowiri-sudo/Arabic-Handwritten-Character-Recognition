@@ -1,0 +1,8 @@
+# Tested on Google Colab (Python 3, T4 GPU)
+tensorflow==2.21.0
+numpy
+pandas
+scikit-learn
+matplotlib
+pillow
+kagglehub
